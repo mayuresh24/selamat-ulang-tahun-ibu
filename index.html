@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Birthday TIARA 🎉</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <style>
+/* -------------------- MUSIC BUTTON -------------------- */
+.music-btn{
+  position:absolute;
+  top:10px; right:10px;
+  z-index:50;
+  width:42px; height:42px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.12);
+  backdrop-filter:blur(6px);
+  border:1px solid rgba(255,255,255,0.15);
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px;
+  cursor:pointer;
+  box-shadow:0 6px 18px rgba(0,0,0,0.4);
+}
+.music-btn:active{ transform:scale(0.9); }
+
+@media(max-width:400px){
+  .music-btn{
+    width:36px; height:36px;
+    font-size:18px;
+  }
+}
+
+/* -------------------- CARD DESIGN -------------------- */
+:root{
+  --bg:#0f1724;
+  --accent:#ff7ab6;
+  --accent2:#ffd166;
+}
+
+html,body{
+  margin:0; height:100%;
+  font-family:'Poppins', sans-serif;
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(255,122,182,0.08), transparent),
+              radial-gradient(900px 400px at 90% 90%, rgba(255,209,102,0.04), transparent),
+              var(--bg);
+  display:flex; justify-content:center; align-items:center;
+}
+
+.card{
+  width:360px; max-width:94vw;
+  height:800px; max-height:96vh;
+  background:rgba(255,255,255,0.02);
+  backdrop-filter:blur(4px);
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,0.04);
+  box-shadow:0 10px 40px rgba(0,0,0,0.6);
+  position:relative; overflow:hidden;
+}
+
+/* -------------------- HERO -------------------- */
+.hero{
+  height:42%;
+  position:relative;
+  display:flex; align-items:flex-end;
+}
+.hero img.bg{
+  position:absolute; inset:0;
+  width:100%; height:100%; object-fit:cover;
+  filter:brightness(0.9);
+  transition:transform 8s linear;
+}
+.hero:hover img.bg{ transform:scale(1.03); }
+
+.nameplate{
+  width:100%; padding:14px 16px;
+  position:relative;
+  backdrop-filter:blur(6px);
+  background:rgba(0,0,0,0.2);
+  display:flex; align-items:center; gap:12px;
+}
+
+.avatar{ width:64px; height:64px; border-radius:50%; overflow:hidden; }
+.avatar img{ width:100%; height:100%; object-fit:cover; }
+
+.name-text h1{
+  margin:0; color:var(--accent);
+  font-size:20px; font-weight:800;
+}
+.name-text p{ margin:3px 0 0 0; font-size:12px; opacity:0.85; }
+
+/* -------------------- CONTENT -------------------- */
+.content{
+  padding:18px; display:flex; flex-direction:column; gap:14px;
+  height:58%;
+}
+
+.age-badge{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:10px 12px; border-radius:14px;
+  background:linear-gradient(90deg, rgba(255,122,182,0.1), rgba(255,209,102,0.08));
+  font-size:14px; font-weight:700; color:#fff;
+}
+
+.date{ font-size:13px; opacity:0.9; }
+
+.message{
+  background:rgba(255,255,255,0.02);
+  border-radius:14px; padding:14px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.5);
+  min-height:120px;
+}
+.message p{ margin:0; font-size:15px; line-height:1.45; color:#f1f7ff; }
+
+/* -------------------- BUTTONS -------------------- */
+.cta-row{ display:flex; gap:10px; }
+.btn{
+  flex:1; padding:12px; border:0;
+  border-radius:12px; cursor:pointer;
+  font-size:14px; font-weight:700;
+  color:white; backdrop-filter:blur(6px);
+}
+.play{ background:linear-gradient(90deg, var(--accent), #ff5f9e); }
+.share{ background:linear-gradient(90deg, #2b6df6, #8bd3ff); }
+
+/* -------------------- CONFETTI -------------------- */
+canvas.confetti{
+  position:absolute; inset:0;
+  pointer-events:none; z-index:20;
+}
+
+/* -------------------- BALLOONS -------------------- */
+.balloon{
+  position:absolute; width:64px; height:96px;
+  bottom:6px; z-index:3;
+}
+.b2{ left:260px; width:48px; height:80px; }
+
+/* -------------------- SPARKLE -------------------- */
+.sparkle{
+  position:absolute; width:8px; height:8px;
+  border-radius:50%; box-shadow:0 0 18px 6px rgba(255,255,255,0.1);
+}
+
+/* -------------------- FOOTER -------------------- */
+.footer{
+  position:absolute;
+  bottom:18px;            /* extra spacing so it never hits buttons */
+  left:14px;
+  right:14px;
+  display:flex;
+  justify-content:center; /* center alignment avoids overlap */
+  text-align:center;
+  font-size:12px;
+  line-height:1.3;
+  opacity:0.9;
+  padding-bottom:4px;
+  pointer-events:none;    /* footer won't block button taps */
+}
+
+/* -------------------- BALLOONS WITH STRINGS -------------------- */
+
+.balloon {
+  position: absolute;
+  width: 70px; 
+  height: 110px;
+  bottom: -150px;              /* start below card */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+  animation: rise 10s linear infinite;
+  z-index: 4;
+}
+
+.balloon.b1 {
+  left: 40px;
+  animation-duration: 11s;
+  animation-delay: 1s;
+}
+
+.balloon.b2 {
+  left: 260px;
+  animation-duration: 13s;
+  animation-delay: 2.5s;
+}
+
+.balloon-img {
+  width: 100%;
+  height: auto;
+  animation: sway 3.5s ease-in-out infinite;
+}
+
+/* Balloon string */
+.string {
+  width: 2px;
+  height: 85px;
+  background: rgba(255,255,255,0.6);
+  box-shadow: 0 0 4px rgba(255,255,255,0.4);
+  border-radius: 2px;
+  margin-top: -4px;
+  animation: stringWave 3s ease-in-out infinite;
+}
+
+/* Rising animation */
+@keyframes rise {
+  0% {
+    transform: translateY(0) rotate(-3deg);
+    opacity: 0;
+  }
+  10% { opacity: 1; }
+  50% {
+    transform: translateY(-350px) rotate(3deg);
+  }
+  100% {
+    transform: translateY(-700px) rotate(0);
+    opacity: 0;
+  }
+}
+
+/* Gentle side sway of balloon */
+@keyframes sway {
+  0% { transform: translateX(0px); }
+  50% { transform: translateX(10px); }
+  100% { transform: translateX(0px); }
+}
+
+/* String waving like real balloons */
+@keyframes stringWave {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(6deg); }
+  100% { transform: rotate(0deg); }
+}
+
+  </style>
+</head>
+
+
+<body>
+<div class="card" id="card">
+
+  <!-- Background MUSIC -->
+  <button class="music-btn" id="musicBtn">⏸</button>
+  <audio id="bgMusic" src="birthday.mp3" loop></audio>
+
+<canvas id="confetti" class="confetti"></canvas>
+<canvas id="fireworks" class="confetti"></canvas>
+
+<div class="balloon b1">
+  <img src="baloon.png" class="balloon-img" alt="">
+  <div class="string"></div>
+</div>
+
+<div class="balloon b2">
+  <img src="baloon.png" class="balloon-img" alt="">
+  <div class="string"></div>
+</div>
+
+  <div class="hero">
+    <img class="bg" src="2538.jpg" alt="bg">
+
+    <div class="nameplate">
+      <div class="avatar"><img src="Nila16.jpg"></div>
+      <div class="name-text">
+        <h1>Ibuku Tersayang</h1>
+        <p style="color:#ffffff;"><b>• Merayakan 55 tahun penuh kebahagiaan • Lahir 28 Nov 1970</b></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="age-badge">🎂 Usia : 55</div>
+    <div class="date" style="color:#ffffff;"><b>Ulang Tahun — 28 November 1970</b></div>
+
+    <div class="message">
+      <p id="line1">Mama tersayang,</p>
+      <p id="line2">Di ulang tahun Mama yang ke-55 ini, kami merayakan hangatnya kasih Mama, tawa Mama, dan cahaya indah yang selalu Mama bawa dalam hidup kami.</p>
+      <p id="line3" style="font-weight:700; color:var(--accent);">Semoga hari Mama bertabur cinta manis dan kilau cahaya yang cantik sekali ✨ ✨</p>
+    </div>
+
+    <div class="cta-row">
+      <button class="btn play" id="playBtn">Mainkan Kejutan ✨</button>
+      <button class="btn share" id="shareBtn">Bagikan 🎉</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div style="color:#FFC0CB;"><b>Salam dari Nai tersayang ❤️</b></div>
+  </div>
+
+</div>
+
+
+<!-- =======================  JAVASCRIPT  ======================= -->
+<script>
+/* -----------------------------------------------------------
+   CONFETTI
+----------------------------------------------------------- */
+const canvas = document.getElementById('confetti');
+const ctx = canvas.getContext('2d');
+const card = document.getElementById('card');
+let W, H, particles = [];
+
+function resize(){
+  W = canvas.width = card.clientWidth;
+  H = canvas.height = card.clientHeight;
+}
+resize(); window.addEventListener('resize', resize);
+
+function rand(min,max){ return Math.random()*(max-min)+min; }
+function particle(x,y){
+  return {
+    x, y, r:rand(6,12),
+    vx:rand(-1.8,1.8), vy:rand(-6,-2),
+    rot:rand(0,Math.PI*2), vr:rand(-0.08,0.08),
+    color:['#ff7ab6','#ffd166','#8bd3ff','#ffd1f0','#fff3b0'][Math.floor(Math.random()*5)],
+    life:rand(60,120)
+  };
+}
+function pop(x,y,c=25){
+  for(let i=0;i<c;i++) particles.push(particle(x,y));
+}
+function update(){
+  ctx.clearRect(0,0,W,H);
+  particles = particles.filter(p=>{
+    p.vy+=0.18; p.x+=p.vx; p.y+=p.vy; p.rot+=p.vr; p.life--;
+    ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot);
+    ctx.fillStyle=p.color; ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*0.7);
+    ctx.restore();
+    return (p.y < H+40 && p.life>0);
+  });
+  requestAnimationFrame(update);
+}
+update();
+
+/* -----------------------------------------------------------
+   PLAY BUTTON + MESSAGE TYPING
+----------------------------------------------------------- */
+const playBtn = document.getElementById('playBtn');
+const bgImg = document.querySelector('.bg');
+
+playBtn.addEventListener('click', ()=>{
+  pop(W/2, H*0.25, 40);
+  bgImg.animate([{transform:'scale(1)'},{transform:'scale(1.06)'}],
+      {duration:900, fill:'forwards'});
+
+  typeText(
+    "Ibu manisku,",
+    "Di hari spesial Mama yang ke-55 ini, kami merayakan hangatnya pelukan Mama, tawa Mama yang menenangkan, dan cahaya indah yang selalu Mama bawa ke dalam hidup kami.",
+    "Semoga hari Mama bertabur cinta manis dan kilau bahagia ✨ ✨"
+  );
+});
+
+async function typeText(a,b,c){
+  const L1=document.getElementById('line1');
+  const L2=document.getElementById('line2');
+  const L3=document.getElementById('line3');
+  L1.textContent=""; L2.textContent=""; L3.textContent="";
+
+  for(const ch of a){ L1.textContent+=ch; await wait(25); }
+  await wait(150);
+  for(const ch of b){ L2.textContent+=ch; await wait(9); }
+  await wait(150);
+  for(const ch of c){ L3.textContent+=ch; await wait(10); }
+}
+function wait(ms){ return new Promise(r=>setTimeout(r,ms)); }
+
+/* -----------------------------------------------------------
+   SHARE BUTTON
+----------------------------------------------------------- */
+document.getElementById('shareBtn').addEventListener('click', async ()=>{
+  try{
+    if(navigator.share){
+      await navigator.share({
+        title:"Happy Birthday TIARA",
+        text:"Wishing Tiara an amazing 55th birthday 🎉",
+        url:location.href
+      });
+    } else alert("Your device does not support sharing.");
+  }catch(e){}
+});
+
+/* -----------------------------------------------------------
+   MUSIC + PLAY/PAUSE
+----------------------------------------------------------- */
+const bgMusic = document.getElementById("bgMusic");
+const musicBtn = document.getElementById("musicBtn");
+
+window.addEventListener("load", ()=>{
+  bgMusic.play().catch(()=>{
+    document.addEventListener("click", ()=>bgMusic.play(), {once:true});
+  });
+});
+
+musicBtn.addEventListener("click", (e)=>{
+  e.stopPropagation();
+  if(bgMusic.paused){
+    bgMusic.play();
+    musicBtn.textContent="⏸";
+  } else {
+    bgMusic.pause();
+    musicBtn.textContent="▶";
+  }
+});
+
+/* -----------------------------------------------------------
+   FIREWORKS EFFECT
+----------------------------------------------------------- */
+
+const fwCanvas = document.getElementById("fireworks");
+const fwCtx = fwCanvas.getContext("2d");
+
+function fwResize() {
+  fwCanvas.width = card.clientWidth;
+  fwCanvas.height = card.clientHeight;
+}
+fwResize();
+window.addEventListener("resize", fwResize);
+
+const fireworks = [];
+const fireworkParticles = [];
+
+function createFirework() {
+  const x = Math.random() * fwCanvas.width;
+  const y = fwCanvas.height + 10;
+
+  const targetX = Math.random() * fwCanvas.width;
+  const targetY = Math.random() * (fwCanvas.height * 0.5);
+
+  fireworks.push({
+    x, y,
+    targetX, targetY,
+    speed: 3 + Math.random() * 2,
+    angle: Math.atan2(targetY - y, targetX - x),
+    radius: 2,
+    color: randomColor()
+  });
+}
+
+function explode(x, y, color) {
+  for (let i = 0; i < 32; i++) {
+    fireworkParticles.push({
+      x, y,
+      angle: Math.random() * Math.PI * 2,
+      speed: 2 + Math.random() * 4,
+      friction: 0.95,
+      gravity: 0.05,
+      alpha: 1,
+      decay: 0.015 + Math.random() * 0.02,
+      color
+    });
+  }
+}
+
+/* -----------------------------------------------------------
+   ❤️ HEART-SHAPED EXPLOSION
+----------------------------------------------------------- */
+function explodeHeart(x, y, color) {
+  const particles = 45;
+  const size = 16;
+
+  for (let i = 0; i < particles; i++) {
+    const angle = Math.PI * 2 * (i / particles);
+
+    // ❤️ Heart math curve
+    const hx = size * (16 * Math.pow(Math.sin(angle), 3));
+    const hy = -size * (
+        13 * Math.cos(angle) -
+        5 * Math.cos(2 * angle) -
+        2 * Math.cos(3 * angle) -
+        Math.cos(4 * angle)
+    );
+
+    fireworkParticles.push({
+      x: x + hx * 0.08,
+      y: y + hy * 0.08,
+      angle: Math.atan2(hy, hx),
+      speed: 2 + Math.random() * 1,
+      friction: 0.92,
+      gravity: 0.03,
+      alpha: 1,
+      decay: 0.012 + Math.random() * 0.01,
+      color
+    });
+  }
+}
+
+function randomColor() {
+  const colors = [
+    "#ff7ab6", "#ffd166", "#8bd3ff",
+    "#ff9bf1", "#ffe29a", "#c4f0ff"
+  ];
+  return colors[Math.floor(Math.random()*colors.length)];
+}
+
+function updateFireworks() {
+  fwCtx.clearRect(0,0,fwCanvas.width, fwCanvas.height);
+
+  if (Math.random() < 0.04) createFirework();
+
+  for (let i = fireworks.length - 1; i >= 0; i--) {
+    const f = fireworks[i];
+
+    const dx = Math.cos(f.angle) * f.speed;
+    const dy = Math.sin(f.angle) * f.speed;
+
+    f.x += dx;
+    f.y += dy;
+
+    fwCtx.beginPath();
+    fwCtx.fillStyle = f.color;
+    fwCtx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
+    fwCtx.fill();
+
+    if (Math.hypot(f.x - f.targetX, f.y - f.targetY) < 12) {
+
+      // ❤️ 25% chance for heart-shaped explosion
+      if (Math.random() < 0.25) {
+        explodeHeart(f.x, f.y, f.color);
+      } else {
+        explode(f.x, f.y, f.color);
+      }
+
+      fireworks.splice(i, 1);
+    }
+  }
+
+  // explosion particles
+  for (let i = fireworkParticles.length - 1; i >= 0; i--) {
+    const p = fireworkParticles[i];
+
+    p.x += Math.cos(p.angle) * p.speed;
+    p.y += Math.sin(p.angle) * p.speed + p.gravity;
+    p.speed *= p.friction;
+
+    p.alpha -= p.decay;
+
+    fwCtx.globalAlpha = p.alpha;
+    fwCtx.fillStyle = p.color;
+    fwCtx.beginPath();
+    fwCtx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+    fwCtx.fill();
+    fwCtx.globalAlpha = 1;
+
+    if (p.alpha <= 0) fireworkParticles.splice(i, 1);
+  }
+
+  requestAnimationFrame(updateFireworks);
+}
+
+updateFireworks();
+</script>
+
+</body>
+</html>
+
